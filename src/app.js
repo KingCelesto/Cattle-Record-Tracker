@@ -22,5 +22,37 @@ async function init() {
     console.error("Could not connect to Ganache", error);
   }
 }
+// Register New Cattle
+async function registerCattle() {
+  const id = document.getElementById("cattleId").value;
+  const breed = document.getElementById("breed").value;
+  const health = document.getElementById("health").value;
+  const loc = document.getElementById("location").value;
+
+  if (!id || !breed) return alert("ID and Breed are required!");
+
+  await cattleContract.methods
+    .registerAnimal(id, breed, health, loc)
+    .send({ from: account, gas: 3000000 });
+
+  alert("Cattle Registered Successfully!");
+  loadCattle();
+}
+
+// Update Cattle Status
+async function updateCattle() {
+  const id = document.getElementById("updateId").value;
+  const health = document.getElementById("updateHealth").value;
+  const loc = document.getElementById("updateLocation").value;
+
+  if (!id || !health || !loc) return alert("Please fill all fields");
+
+  await cattleContract.methods
+    .addUpdate(id, health, loc)
+    .send({ from: account, gas: 3000000 });
+
+  alert("Ledger Updated!");
+  loadCattle();
+}
 
 init();
