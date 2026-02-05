@@ -1,0 +1,56 @@
+/* --- Variables & Reset --- */
+:root {
+  --primary-green: #2d5a27;
+  --bg-light: #f4f7f6;
+  --text-dark: #333;
+  --white: #ffffff;
+  --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+body {
+  background-color: var(--bg-light);
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  margin: 0;
+  padding: 20px; /* Reduced from 40px for better vertical spacing */
+  color: var(--text-dark);
+}
+
+/* --- The Container --- */
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* --- Layout Utils (Bootstrap shim) --- */
+.d-flex {
+  display: flex;
+}
+.justify-content-between {
+  justify-content: space-between;
+}
+.align-items-center {
+  align-items: center;
+}
+.mb-4 {
+  margin-bottom: 1.5rem;
+}
+
+/* --- Main Dashboard Card --- */
+.main-card {
+  background: var(--white);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  margin-bottom: 1.5rem; /* Space between cards */
+}
+
+h2 {
+  color: var(--primary-green);
+  margin-bottom: 1rem;
+}
+
+h4 {
+  margin: 0;
+  font-size: 1.3rem;
+  color: var(--primary-green);
+}
