@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AgriChain | Blockchain Cattle Tracker</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+          <h2 style="color: var(--primary-green); margin: 0">
+            AgriChain Tracker
+          </h2>
+          <small style="color: #666"
+            >Blockchain-verified Livestock Supply Chain</small
+          >
+        </div>
+        <span class="status-badge" id="status">Searching for Ganache...</span>
+      </div>
+
+      <div
+        class="forms-container"
+        style="display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 25px"
+      >
+        <div class="main-card" style="flex: 1; min-width: 300px">
+          <h4>Register New Asset</h4>
+          <hr />
+          <div class="registration-form">
+            <div class="input-group">
+              <input
+                type="number"
+                id="cattleId"
+                placeholder="Tag ID (e.g. 101)"
+              />
+              <input type="text" id="breed" placeholder="Breed" />
+            </div>
+            <div class="input-group">
+              <input type="text" id="health" placeholder="Initial Health" />
+              <input type="text" id="location" placeholder="Origin Farm" />
+            </div>
+            <button
+              onclick="registerCattle()"
+              class="btn-info"
+              style="width: 100%; margin-top: 10px"
+            >
+              Register to Ledger
+            </button>
+          </div>
+        </div>
+
+        <div
+          class="main-card"
+          style="flex: 1; min-width: 300px; border-top: 4px solid #5d4037"
+        >
+          <h4>Log Event / Transfer</h4>
+          <hr />
+          <div class="registration-form">
+            <div class="input-group">
+              <input
+                type="number"
+                id="updateId"
+                placeholder="Existing Tag ID"
+              />
+              <input
+                type="text"
+                id="updateHealth"
+                placeholder="Current Health Status"
+              />
+            </div>
+            <div class="input-group">
+              <input
+                type="text"
+                id="updateLocation"
+                placeholder="Current Location"
+              />
+            </div>
+            <button
+              onclick="updateCattle()"
+              class="btn-info"
+              style="width: 100%; margin-top: 10px; background-color: #5d4037"
+            >
+              Add Update Entry
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="main-card">
+        <div class="mb-4">
+          <h4>Live Asset Registry</h4>
+          <p style="font-size: 0.85rem; color: #777">
+            Click 'View History' to see the full immutable audit trail for each
+            animal.
+          </p>
+        </div>
+        <div class="table-responsive">
+          <table class="table align-middle">
+            <thead class="table-light">
+              <tr>
+                <th>Tag ID</th>
+                <th>Breed</th>
+                <th>Last Known Health</th>
+                <th>Last Location</th>
+                <th>History</th>
+              </tr>
+            </thead>
+            <tbody id="cattleTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="historyModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Cattle Movement History</h5>
+            <button type="button" class="btn-close" onclick="closeModal()">
+              &times;
+            </button>
+          </div>
+          <div class="modal-body" id="historyContent"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.8.0/dist/web3.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
