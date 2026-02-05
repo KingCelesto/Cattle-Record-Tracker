@@ -55,4 +55,59 @@ async function updateCattle() {
   loadCattle();
 }
 
+// Load All Cattle to Table
+async function loadCattle() {
+  const count = await cattleContract.methods.getCattleCount().call();
+  const table = document.getElementById("cattleTable");
+  table.innerHTML = "";
+
+  for (let i = 0; i < count; i++) {
+    const id = await cattleContract.methods.cattleIds(i).call();
+    const animal = await cattleContract.methods.cattle(id).call();
+    const history = await cattleContract.methods.getHistory(id).call();
+    const latestStatus = history.length ? history[history.length - 1] : { healthStatus: "N/A", location: "N/A" };
+
+    let row = `<tr>
+        <td>${id}</td>
+        <td>${animal.breed}</td>
+        <td>${latestStatus.healthStatus}</td>
+        <td>${latestStatus.location}</td>
+        <td><button class="btn-info" onclick="viewHistory(${id})">View Logs</button></td>
+      </tr>`;
+    table.innerHTML += row;
+  }
+}
+
+// View History in Modal
+async function viewHistory(id) {
+  const history = await cattleContract.methods.getHistory(id).call();
+  const historyContent = document.getElementById("historyContent");
+  historyContent.innerHTML = "";
+
+  history.forEach((update) => {
+    const date = new Date(update.timestamp * 1000).toLocaleString();
+    historyContent.innerHTML += `
+      <div class="timeline-item">
+        <strong>${date}</strong><br>
+        <span>Status: ${update.healthStatus}</span><br>
+        <small>Location: ${update.location}</small>
+      </div>
+    `;
+  });
+
+  document.getElementById("historyModal").classList.add("show");
+}
+
+// Modal Close Logic
+document.querySelector(".btn-close").onclick = function () {
+  document.getElementById("historyModal").classList.remove("show");
+};
+
+window.onclick = function (event) {
+  let modal = document.getElementById("historyModal");
+  if (event.target == modal) {
+    modal.classList.remove("show");
+  }
+};
+
 init();
